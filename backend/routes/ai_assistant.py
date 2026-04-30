@@ -1,5 +1,5 @@
 import os
-import google.generativeai as genai
+from google import genai
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
@@ -9,12 +9,12 @@ from ml.model import best_time, train_model
 
 ai_bp = Blueprint("ai", __name__)
 
-# Configure Gemini
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-print("GEMINI KEY:", os.environ.get("GEMINI_API_KEY"))
+# Gemini Client
+client = genai.Client(
+    api_key=os.environ.get("GEMINI_API_KEY")
+)
 
-# Gemini model
-gemini_model = genai.GenerativeModel("gemini-1.5-pro")
+print("GEMINI KEY:", os.environ.get("GEMINI_API_KEY"))
 
 
 def _build_context(uid: int) -> str:
@@ -103,7 +103,10 @@ User question:
 {question}
 """
 
-        response = gemini_model.generate_content(prompt)
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
 
         raw = response.text
 
@@ -130,7 +133,7 @@ User question:
         import traceback
         traceback.print_exc()
 
-        return jsonify({
-            "answer": f"AI error: {str(e)}",
-            "suggested_task": None
-        }), 500
+    return jsonify({
+        "answer": "Gemini quota exceeded. Please try again later.",
+        "suggested_task": None
+    }), 429

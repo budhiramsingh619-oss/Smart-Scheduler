@@ -4,6 +4,8 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 
+load_dotenv()
+
 from models.db import db
 from routes.auth import auth_bp
 from routes.tasks import tasks_bp
@@ -11,10 +13,6 @@ from routes.schedule import schedule_bp
 from routes.dashboard import dashboard_bp
 from routes.google_oauth import google_bp
 from routes.ai_assistant import ai_bp
-
-load_dotenv()
-
-
 def create_app():
     app = Flask(__name__)
 
