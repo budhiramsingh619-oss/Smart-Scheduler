@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Smart Scheduler AI
 
 A full-stack AI productivity system built with **React + Vite** (frontend) and **Flask + PostgreSQL** (backend).
@@ -190,3 +191,6 @@ Uses a **Gradient Boosting Classifier** (scikit-learn) trained on your activity 
 - Build the frontend: `npm run build` → serve `dist/` via nginx
 - Store `DATABASE_URL` as a proper environment secret
 - Add HTTPS before deploying Google OAuth to production (required by Google)
+=======
+# Smart-Scheduler
+>>>>>>> 6f6301d93b82d2d98409e0401aa1cb8f5bf2368e
