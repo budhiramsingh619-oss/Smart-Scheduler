@@ -29,7 +29,14 @@ def create_app():
 
     db.init_app(app)
     JWTManager(app)
-    CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+    CORS(
+    app,
+    origins=[
+        "http://localhost:5173",
+        "https://smart-scheduler-smoky.vercel.app"
+    ],
+    supports_credentials=True
+)
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(tasks_bp, url_prefix="/tasks")
