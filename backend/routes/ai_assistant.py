@@ -9,10 +9,8 @@ from ml.model import best_time, train_model
 
 ai_bp = Blueprint("ai", __name__)
 
-# Gemini Client
-client = genai.Client(
-    api_key=os.environ.get("GEMINI_API_KEY")
-)
+# Gemini Setup
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
 print("GEMINI KEY:", os.environ.get("GEMINI_API_KEY"))
 
@@ -103,12 +101,11 @@ User question:
 {question}
 """
 
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
-        )
-
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
         raw = response.text
+
+
 
         suggested_task = None
 
